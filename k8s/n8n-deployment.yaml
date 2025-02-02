@@ -1,4 +1,13 @@
 apiVersion: v1
+kind: Secret
+metadata:
+  name: n8n-auth
+type: Opaque
+stringData:
+  username: "admin"
+  password: "llama123flow"
+---
+apiVersion: v1
 kind: ConfigMap
 metadata:
   name: n8n-config
@@ -7,7 +16,7 @@ data:
   N8N_PORT: "5678"
   N8N_PROTOCOL: "http"
   GENERIC_TIMEZONE: "America/Sao_Paulo"
-  N8N_BASIC_AUTH_ACTIVE: "false"
+  N8N_BASIC_AUTH_ACTIVE: "true"
   NODE_ENV: "production"
   N8N_USER_FOLDER: "/home/node/.n8n"
   WEBHOOK_URL: "http://localhost:30678/"
@@ -50,6 +59,17 @@ spec:
         envFrom:
         - configMapRef:
             name: n8n-config
+        env:
+        - name: N8N_BASIC_AUTH_USER
+          valueFrom:
+            secretKeyRef:
+              name: n8n-auth
+              key: username
+        - name: N8N_BASIC_AUTH_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: n8n-auth
+              key: password
         volumeMounts:
         - name: n8n-data
           mountPath: /home/node/.n8n
