@@ -4,8 +4,15 @@ metadata:
   name: llamaflow-ingress
   namespace: llamaflow
   annotations:
-    traefik.ingress.kubernetes.io/router.entrypoints: web
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
 spec:
+  tls:
+  - hosts:
+    - n8n.local
+    - minio.local
+    - minio-api.local
+    secretName: llamaflow-tls
   rules:
   - host: n8n.local
     http:
