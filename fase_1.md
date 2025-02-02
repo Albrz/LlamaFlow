@@ -2,7 +2,7 @@ Perfeito! Vamos detalhar ao máximo a Fase 1 do projeto "LlamaFlow", que é a fa
 
 **Fase 1: Preparação do Ambiente (Detalhado)**
 
-**Objetivo:** Configurar todos os softwares, ferramentas e recursos necessários para o desenvolvimento do projeto "LlamaFlow". Isso inclui a instalação de Docker, n8n, Nextflow, MinIO (ou S3), a configuração do GitHub e, opcionalmente, a instalação do K3s.
+**Objetivo:** Configurar todos os softwares, ferramentas e recursos necessários para o desenvolvimento do projeto "LlamaFlow". Isso inclui a instalação de Docker, n8n, Nextflow, MinIO (ou S3), a configuração do GitHub e a instalação do K3s.
 
 **Atividade 1: Instalar Docker (Detalhado)**
 
@@ -157,19 +157,32 @@ Perfeito! Vamos detalhar ao máximo a Fase 1 do projeto "LlamaFlow", que é a fa
 *   **5.5 Iniciar o Git:**
     * **Ação:** No diretório do projeto rodar o comando `git init` para iniciar o versionamento do projeto.
 
-**Atividade 6: Instalar K3s (Opcional, Detalhado):**
+**Atividade 6: Instalar e Configurar K3s:**
 
 *   **6.1 Instalar K3s:**
-    *   **Ação:** Abrir um terminal ou prompt de comando.
-    *   **Comando:** Executar `curl -sfL https://get.k3s.io | sh -`
-    *   **Observações:**
-        *   Este comando instala o k3s em seu sistema.
-        *   É importante ter o `kubectl` instalado para gerenciamento.
-*  **6.2 Obter as credenciais:**
-    *   **Ação:** Executar `sudo chmod 644 /etc/rancher/k3s/k3s.yaml`
-    *  **Ação:** Utilizar o arquivo para o uso do `kubectl`
+     *   **Comando:** Executar `curl -sfL https://get.k3s.io | sh -`
+         *   Este comando instala o k3s em seu sistema.
+
+*   **6.2 Configurar Permissões:**
+     *   **Ação:** Executar `sudo chmod 644 /etc/rancher/k3s/k3s.yaml`
+     *   **Ação:** Configurar acesso ao kubectl:
+         ```bash
+         mkdir -p ~/.kube
+         sudo cp /etc/rancher/k3s/k3s.yaml ~/.kube/config
+         sudo chown $USER:$USER ~/.kube/config
+         ```
+
 *   **6.3 Verificar Instalação:**
-    *   **Ação:** Digitar `kubectl cluster-info` e verificar se as informações do cluster aparecem.
+     *   **Comando:** `kubectl get nodes`
+     *   **Resultado Esperado:** Deve mostrar seu nó k3s como "Ready"
+
+*   **6.4 Instalar Helm (Opcional):**
+     *   **Comando:** `curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash`
+     *   **Verificação:** `helm version`
+
+*   **6.5 Configurar Storage Class:**
+     *   K3s vem com Local Path Provisioner por padrão
+     *   Verificar com: `kubectl get storageclass`
 
 **Resultado Final da Fase 1:**
 
@@ -180,7 +193,7 @@ Ao final da Fase 1, você terá:
 *   Nextflow instalado e configurado para execução.
 *   MinIO (ou S3) configurado e pronto para armazenar dados.
 *   Um repositório no GitHub para versionar o projeto.
-*   (Opcional) K3s instalado.
+*   K3s instalado e configurado.
 
 Com esse ambiente preparado, você estará pronto para iniciar a fase de desenvolvimento do workflow do n8n e do pipeline do Nextflow. Lembre-se de que cada etapa deve ser verificada e testada antes de seguir para a próxima.
 

@@ -214,6 +214,24 @@ redis: "7.2.3"
    - Security updates
    - Changelog tracking
 
+## Infraestrutura e Orquestração
+
+*   **Kubernetes (K3s) como Base:**
+    *   K3s foi escolhido como a plataforma de orquestração principal por ser:
+        *   Leve e fácil de instalar
+        *   Completo para produção
+        *   Ideal para cargas de trabalho de ML/AI
+    *   Benefícios específicos para o projeto:
+        *   Gerenciamento eficiente de recursos (CPU/GPU/Memória)
+        *   Auto-healing e alta disponibilidade
+        *   Escalabilidade horizontal
+        *   Monitoramento integrado
+    *   Considerações de deployment:
+        *   Usar namespaces para separar ambientes
+        *   Configurar limites de recursos apropriados
+        *   Implementar backups dos volumes persistentes
+        *   Considerar uso de operadores específicos para ML
+
 ## Recomendações Finais
 
 1. **Documentação**:
